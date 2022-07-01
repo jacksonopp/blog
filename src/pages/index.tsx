@@ -1,12 +1,14 @@
 import type { NextPage } from "next";
+import { getToken } from "next-auth/jwt";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
+import { useQuery } from "react-query";
 import Navigation from "../components/Navigation";
 
 const Home: NextPage = () => {
   // const hello = trpc.useQuery(["example.hello", { text: "from tRPC" }]);
-  const {data: session} = useSession();
-
+  const {data: session} = useSession(); 
+  
   if (session) {
     return (
       <div>

@@ -1,6 +1,7 @@
+import { User } from "@prisma/client";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 
 type Props = {};
 
@@ -12,7 +13,9 @@ const Navigation = () => {
     <nav className="flex items-center justify-between flex-wrap bg-teal-500 p-6">
       <div className="flex items-center flex-shrink-0 text-white mr-6">
         <Link href="/">
-          <a><span className="font-semibold text-xl tracking-tight">Home</span></a>
+          <a>
+            <span className="font-semibold text-xl tracking-tight">Home</span>
+          </a>
         </Link>
       </div>
       <div className="block lg:hidden">
@@ -29,28 +32,31 @@ const Navigation = () => {
       </div>
       <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
         <div className="text-sm lg:flex-grow">
-          <Link
-            href="/blog"
-          >
-            <a className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">Blog</a>
+          <Link href="/blog">
+            <a className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+              Blog
+            </a>
           </Link>
           <Link href="/about">
-            <a
-              
-              className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
-            >
+            <a className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
               About
             </a>
           </Link>
           <Link href="/contact">
-            <a
-              className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white"
-            >
+            <a className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
               Contact
             </a>
           </Link>
         </div>
         <div>
+          {session?.role === 'superadmin' && (
+            <Link href="/admin">
+              <a className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+                Admin
+              </a>
+            </Link>
+          )}
+
           <button
             onClick={() => {
               session ? signOut() : signIn();

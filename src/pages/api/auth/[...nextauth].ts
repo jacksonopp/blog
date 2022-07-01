@@ -15,4 +15,10 @@ export default NextAuth({
     }),
     // ...add more providers here
   ],
+  callbacks: {
+    session: async ({session, token, user}) => {
+      session.role = user.role ?? "user";
+      return session;
+    }
+  }
 });
